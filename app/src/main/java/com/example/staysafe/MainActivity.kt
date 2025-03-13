@@ -1,50 +1,52 @@
 package com.example.staysafe
 
+import android.accounts.Account
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.staysafe.ui.theme.StaySafeTheme
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Button
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.staysafe.ui.theme.StaySafeTheme
+import kotlinx.coroutines.launch
 
-@Composable
-fun HomeScreen() {
-    var presses by remember { mutableIntStateOf(0) }
-
-    Scaffold() { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Text(
-                modifier = Modifier.padding(8.dp),
-                text =
-                """
-                    Welcome to StaySafe.
-                    
-                    You have pressed the floating action button $presses times.
-                """.trimIndent(),
-
-                )
-            Row {
-                val startJourneyButton = Button(onClick = {}) {Text("Start Journey")}
-                val trackJourneyButton = Button(onClick = {}) {Text("Track Journey")}
-            }
-        }
-    }
-}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +54,52 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StaySafeTheme {
-                HomeScreen()
+                MyApp()
             }
         }
     }
 }
+
+@Composable
+fun MyApp() {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = "HomeScreen"
+    ) {
+        composable("HomeScreen") { AppDrawerLayout(navController) { HomeScreen(navController) } }
+        composable("StartJourneyScreen") { AppDrawerLayout(navController) { StartJourneyScreen(navController) } }
+        composable("TrackingScreen") { AppDrawerLayout(navController) { TrackingScreen(navController) } }
+        composable("JourneyCompleteScreen") { AppDrawerLayout(navController) { JourneyCompleteScreen(navController) } }
+        composable("AccountScreen") { AppDrawerLayout(navController) { AccountScreen(navController) } }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomTopAppBar(
+    title: String,
+    navController: NavController,
+    onMenuClick: () -> Unit
+) {
+    val currentDestination = navController.currentBackStackEntry?.destination?.route
+
+    TopAppBar(title = { Text(title) },
+        navigationIcon = {
+            if (currentDestination != "HomeScreen") {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                }
+            }
+        },
+        actions = {
+            IconButton(onClick = onMenuClick) {
+                Icon(Icons.Filled.Menu,  contentDescription = "Menu")
+            }
+        }
+    )
+}
+
+
