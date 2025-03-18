@@ -54,6 +54,7 @@ fun StartJourneyScreen(navController: NavController) {
                     val arrivalHour = arrivalTime.hour
                     val arrivalMinute = arrivalTime.minute
 
+                    //pass variables to next screen
                     navController.navigate("TrackingScreen?departureHour=$departureHour&departureMinute=$departureMinute&arrivalHour=$arrivalHour&arrivalMinute=$arrivalMinute")
                 }
             }
