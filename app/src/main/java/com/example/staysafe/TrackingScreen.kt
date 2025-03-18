@@ -38,16 +38,7 @@ import androidx.navigation.NavController
 @Composable
 fun TrackingScreen(navController: NavController) {
     var presses by remember { mutableIntStateOf(0) }
-    val drawerState = remember { mutableStateOf(false) }
 
-    ModalNavigationDrawer(
-        drawerState = DrawerState(if (drawerState.value) DrawerValue.Open else DrawerValue.Closed),
-        drawerContent = {
-            DrawerContent(navController) {
-                drawerState.value = false // Close drawer after clicking
-            }
-        }
-    ) {
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(onClick = { presses++ }) {
@@ -70,4 +61,3 @@ fun TrackingScreen(navController: NavController) {
             }
         }
     }
-}
