@@ -45,6 +45,7 @@ fun MyApp() {
         composable("TrackingScreen") { AppDrawerLayout(navController) { TrackingScreen(navController) } }
         composable("JourneyCompleteScreen") { AppDrawerLayout(navController) { JourneyCompleteScreen(navController) } }
         composable("AccountScreen") { AppDrawerLayout(navController) { AccountScreen(navController) } }
+        composable("TrackFriendScreen") { AppDrawerLayout(navController) { TrackFriendScreen(navController) } }
     }
 }
 

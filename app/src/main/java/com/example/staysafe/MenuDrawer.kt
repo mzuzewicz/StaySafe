@@ -50,7 +50,16 @@ fun DrawerContent(navController: NavController, closeDrawer: () -> Unit) {
             navController.navigate("StartJourneyScreen")
             closeDrawer()
         }) {
-            Text("Start Journey")
+            Text("Start New Journey")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(onClick = {
+            navController.navigate("TrackFriendScreen")
+            closeDrawer()
+        }) {
+            Text("Track a Friend's Journey")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
