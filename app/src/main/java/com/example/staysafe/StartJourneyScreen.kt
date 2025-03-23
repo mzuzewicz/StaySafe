@@ -22,11 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.staysafe.maps.Journey
+import com.example.staysafe.maps.JourneyViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartJourneyScreen(navController: NavController) {
+fun StartJourneyScreen(navController: NavController, viewModel: JourneyViewModel) {
     val drawerState = remember { mutableStateOf(false) }
 
     Scaffold()
@@ -50,7 +52,8 @@ fun StartJourneyScreen(navController: NavController) {
                     val departureMinute = departureTime.minute
                     val arrivalHour = arrivalTime.hour
                     val arrivalMinute = arrivalTime.minute
-
+                    val journey = Journey(startLocation, endLocation, "", "", 1)
+                    viewModel.setJourney(journey)
                     //pass variables to next screen
                     navController.navigate("TrackingScreen?departureHour=$departureHour&departureMinute=$departureMinute&arrivalHour=$arrivalHour&arrivalMinute=$arrivalMinute")
                 }
