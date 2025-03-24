@@ -1,5 +1,6 @@
 package com.example.staysafe
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -34,6 +36,10 @@ fun HomeScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Stay Safe Logo",
+            )
             Text(
                 modifier = Modifier.padding(8.dp),
                 text =
