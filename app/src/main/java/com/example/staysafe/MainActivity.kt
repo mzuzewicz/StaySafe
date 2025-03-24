@@ -92,7 +92,7 @@ fun MyApp() {
         composable("TrackingScreen") {
             AppDrawerLayout(navController) {
                 TrackingScreen(journeyViewModel) {
-
+                    navController.navigateUp()
                 }
             }
         }
