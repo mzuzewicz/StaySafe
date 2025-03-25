@@ -1,4 +1,4 @@
-package com.example.staysafe
+package com.example.staysafe.accounts
 
 import androidx.room.Dao
 import androidx.room.Delete

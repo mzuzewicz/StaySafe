@@ -1,4 +1,4 @@
-package com.example.staysafe
+package com.example.staysafe.accounts
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,7 +8,7 @@ data class User(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val phoneNumber: String,
-    val password: String,
+    private val password: String,
     val contacts: Array<User>,
     val emergencyContacts: Array<User>
 ) {

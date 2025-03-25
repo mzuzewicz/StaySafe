@@ -1,4 +1,4 @@
-package com.example.staysafe
+package com.example.staysafe.accounts
 
 import androidx.room.Database
 import androidx.room.Room.databaseBuilder
