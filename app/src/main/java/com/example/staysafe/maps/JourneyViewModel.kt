@@ -219,7 +219,7 @@ class JourneyViewModel(
                     "lat: ${it.latitude}, lng: ${it.longitude}"
                 } ?: "Unknown location"
 
-                val message = "EMERGENCY ALERT from ${journey.emergencyContactName}! " +
+                val message = "EMERGENCY ALERT! " +
                         "I need help at my current location: $currentLocationStr. " +
                         "I was traveling from ${journey.startDestination} to ${journey.endDestination}."
 

@@ -89,7 +89,17 @@ fun MyApp() {
     ) {
         composable("HomeScreen") { AppDrawerLayout(navController) { HomeScreen(navController) } }
         composable("StartJourneyScreen") { AppDrawerLayout(navController) { StartJourneyScreen(navController, viewModel = journeyViewModel) } }
+
         composable("TrackingScreen") { AppDrawerLayout(navController) { TrackingScreen(journeyViewModel) {} } }
+
+        composable("TrackingScreen") {
+            AppDrawerLayout(navController) {
+                TrackingScreen(journeyViewModel) {
+                    navController.navigateUp()
+                }
+            }
+        }
+
         composable("JourneyCompleteScreen") { AppDrawerLayout(navController) { JourneyCompleteScreen(navController) } }
         composable("AccountScreen") { AppDrawerLayout(navController) { AccountScreen(navController) } }
         composable("TrackFriendScreen") { AppDrawerLayout(navController) { TrackFriendScreen(navController) } }
