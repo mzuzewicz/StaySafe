@@ -110,9 +110,11 @@ fun MyApp() {
         composable("StartJourneyScreen") { AppDrawerLayout(navController) { StartJourneyScreen(navController, viewModel = journeyViewModel) } }
         composable("TrackingScreen") { AppDrawerLayout(navController) { TrackingScreen(journeyViewModel) {} } }
         composable("TrackingScreen") {AppDrawerLayout(navController) {TrackingScreen(journeyViewModel) {navController.navigateUp()}}}
+        composable("FriendTrackingScreen") { AppDrawerLayout(navController) { FriendTrackingScreen(journeyViewModel) {} } }
+        composable("FriendTrackingScreen") {AppDrawerLayout(navController) {FriendTrackingScreen(journeyViewModel) {navController.navigateUp()}}}
         composable("JourneyCompleteScreen") { AppDrawerLayout(navController) { JourneyCompleteScreen(navController) } }
         composable("AccountScreen") { AppDrawerLayout(navController) { AccountScreen(navController, userViewModel) } }
-        composable("TrackFriendScreen") { AppDrawerLayout(navController) { TrackFriendScreen(navController, userViewModel) } }
+        composable("TrackFriendScreen") { AppDrawerLayout(navController) { TrackFriendScreen(navController, viewModel = journeyViewModel) } }
 
     }
 }

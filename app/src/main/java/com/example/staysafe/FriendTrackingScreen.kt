@@ -1,5 +1,6 @@
 package com.example.staysafe
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -58,9 +59,10 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TrackingScreen(
+fun FriendTrackingScreen(
     viewModel: JourneyViewModel,
     onJourneyComplete: () -> Unit
 ) {
