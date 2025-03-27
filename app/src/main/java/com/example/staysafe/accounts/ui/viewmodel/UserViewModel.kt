@@ -16,7 +16,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 
-class UserViewModel(application: Application, private val repository: UserRepository) : AndroidViewModel(application) {
+class UserViewModel(application: Application, private val repository: UserRepository) :
+    AndroidViewModel(application) {
     val user: LiveData<User?> = repository.user
     private val _contacts = MutableStateFlow<List<User>>(emptyList())
     val contacts: StateFlow<List<User>> = _contacts.asStateFlow()
@@ -37,18 +38,18 @@ class UserViewModel(application: Application, private val repository: UserReposi
     }
 
 
-    companion object{
+    companion object {
         class UserViewModelFactory(
             private val application: Application,
             private val repository: UserRepository
         ) : ViewModelProvider.Factory {
 
             @Suppress("UNCHECKED_CAST")
-            override fun <T: ViewModel> create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
                     return UserViewModel(application, repository) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel Class")
+                }
+                throw IllegalArgumentException("Unknown ViewModel Class")
             }
         }
     }
