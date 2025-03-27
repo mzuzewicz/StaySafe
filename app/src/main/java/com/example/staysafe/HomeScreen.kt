@@ -53,7 +53,7 @@ fun HomeScreen(navController: NavController) {
                 val startJourneyButton = Button(
                     onClick = {navController.navigate("StartJourneyScreen")})
                 { Text("Start Journey") }
-                val trackJourneyButton = Button(onClick = {navController.navigate("TrackingScreen")}) { Text("Track Journey") }
+                val trackJourneyButton = Button(onClick = {navController.navigate("TrackFriendScreen")}) { Text("Track Friends") }
             }
         }
     }

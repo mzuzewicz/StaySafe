@@ -29,7 +29,7 @@ class UserViewModel(application: Application, private val repository: UserReposi
 
     fun insertDummyData() {
         viewModelScope.launch {
-            repository.insertData()
+            repository.insertDummyData()
         }
     }
 

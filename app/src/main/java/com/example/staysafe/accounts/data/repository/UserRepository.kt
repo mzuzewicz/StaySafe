@@ -11,6 +11,7 @@ class UserRepository(private val userDao: UserDAO){
 
     val user: LiveData<User?> = userDao.getUser()
 
+    //USER ACTIONS
     suspend fun insertUser(user: User) {
         userDao.insertUser(user)
     }
@@ -24,14 +25,26 @@ class UserRepository(private val userDao: UserDAO){
     }
 
 
+    //CONTACT ACTIONS
     suspend fun insertUserContact(contact: UserContact) {
         userDao.insertUserContact(contact)
     }
 
+    suspend fun getAllContacts() {
+        userDao.getAllContacts()
+    }
+
+
+    //EMERGENCY CONTACT ACTIONS
     suspend fun insertEmergencyContact(emergencyContact: EmergencyContact) {
         userDao.insertEmergencyContact(emergencyContact)
     }
 
+    suspend fun getAllEmergencyContacts() {
+        userDao.getAllEmergencyContacts()
+    }
+
+    //DUMMY DATA
     suspend fun insertUserWithContacts(
         user: User,
         contacts: List<User>,
@@ -45,18 +58,19 @@ class UserRepository(private val userDao: UserDAO){
             insertEmergencyContact(EmergencyContact(userId = user.id, emergencyContactId = emergencyContact.id))
         }
     }
-    suspend fun insertData() {
+    suspend fun insertDummyData() {
 
         val contact1 = User(name = "Alice", phoneNumber = "1234567890", password = "password123")
         val contact2 = User(name = "Bob", phoneNumber = "9876543210", password = "password456")
+        val contact3 = User(name = "Mike", phoneNumber = "2323984710", password = "password456")
+        val contact4 = User(name = "Jeff", phoneNumber = "2748592019", password = "password456")
 
         val emergencyContact1 = User(name = "Eve", phoneNumber = "5551234567", password = "password789")
-
         val newUser = User(name = "John Doe", phoneNumber = "5559876543", password = "john123")
 
         insertUserWithContacts(
             user = newUser,
-            contacts = listOf(contact1, contact2),
+            contacts = listOf(contact1, contact2, contact3, contact4),
             emergencyContacts = listOf(emergencyContact1)
         )
     }
