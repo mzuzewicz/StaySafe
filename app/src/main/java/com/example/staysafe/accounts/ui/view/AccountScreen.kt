@@ -38,7 +38,6 @@ fun AccountScreen(navController: NavController, viewModel: UserViewModel) {
     val contacts = remember { mutableStateListOf<User>() }
     val emergencyContacts = remember { mutableStateListOf<User>() }
 
-    viewModel.insertDummyData()
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text("User Profile", style = MaterialTheme.typography.headlineMedium)

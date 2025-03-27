@@ -30,34 +30,31 @@ interface UserDAO {
     @Insert
     suspend fun insertUser(user: User)
 
+    @Insert
+    suspend fun insertUserById(user: User): Long
+
     @Delete
     suspend fun deleteUser(user: User)
 
 
-    //CONTACT ACTIONS
-    @Query("Select * FROM users WHERE id IN (SELECT contactId FROM contacts WHERE userId = :userId)")
-    suspend fun getContactsForUser(userId: Int): List<User>
-
-    @Query("SELECT * FROM users WHERE id IN(SELECT contactId FROM contacts)")
-    suspend fun getAllContacts(): List<User>
 
     @Insert
     suspend fun insertUserContact(contact: UserContact)
+
+    @Update
+    suspend fun updateContact(contact: UserContact)
 
     @Delete
     suspend fun deleteUserContact(contact: UserContact)
 
 
-    //EMERGENCY CONTACT ACTIONS
-    @Query("SELECT * FROM users WHERE id IN (SELECT emergencyContactId FROM emergency_contacts WHERE userId = :userId)")
-    suspend fun getEmergencyContactsForUser(userId: Int): List<User>
-
-    @Query("SELECT * FROM users WHERE id IN (SELECT emergencyContactId FROM emergency_contacts)")
-    suspend fun getAllEmergencyContacts(): List<User>
 
     @Insert
     suspend fun insertEmergencyContact(emergencyContact: EmergencyContact)
 
+    @Update
+    suspend fun updateEmergencyContact(emergencyContact: EmergencyContact)
+
     @Delete
-    suspend fun deleteUserEmergencyContact(contact: UserContact)
+    suspend fun deleteUserEmergencyContact(emergencyContact: EmergencyContact)
 }

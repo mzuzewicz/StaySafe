@@ -1,6 +1,7 @@
 package com.example.staysafe.accounts.data.repository
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.staysafe.accounts.data.db.EmergencyContact
 import com.example.staysafe.accounts.data.db.User
@@ -26,13 +27,18 @@ class UserRepository(private val userDao: UserDAO){
 
 
     //CONTACT ACTIONS
-    suspend fun insertUserContact(contact: UserContact) {
+    suspend fun insertContact(contact: UserContact) {
         userDao.insertUserContact(contact)
     }
 
-    suspend fun getAllContacts() {
-        userDao.getAllContacts()
+    suspend fun updateContact(contact: UserContact) {
+        userDao.updateContact(contact)
     }
+
+    suspend fun deleteContact(contact: UserContact) {
+        userDao.deleteUserContact(contact)
+    }
+
 
 
     //EMERGENCY CONTACT ACTIONS
@@ -40,39 +46,31 @@ class UserRepository(private val userDao: UserDAO){
         userDao.insertEmergencyContact(emergencyContact)
     }
 
-    suspend fun getAllEmergencyContacts() {
-        userDao.getAllEmergencyContacts()
+    suspend fun updateEmergencyContact(emergencyContact: EmergencyContact) {
+        userDao.updateEmergencyContact(emergencyContact)
     }
+
+    suspend fun deleteEmergencyContact(emergencyContact: EmergencyContact) {
+        userDao.deleteUserEmergencyContact(emergencyContact)
+    }
+
+
 
     //DUMMY DATA
-    suspend fun insertUserWithContacts(
-        user: User,
-        contacts: List<User>,
-        emergencyContacts: List<User>
-    ) {
-        insertUser(user)
-        contacts.forEach { contact ->
-            insertUserContact(UserContact(userId = user.id, contactId = contact.id))
-        }
-        emergencyContacts.forEach { emergencyContact ->
-            insertEmergencyContact(EmergencyContact(userId = user.id, emergencyContactId = emergencyContact.id))
-        }
-    }
     suspend fun insertDummyData() {
+            val contact1 = UserContact(contactName = "Jeff", contactPhoneNumber = "239480293845")
+            val contact2 = UserContact(contactName = "Mike", contactPhoneNumber = "212445656754")
+            val contact3 = UserContact(contactName = "Bob", contactPhoneNumber = "345623426346")
+            val contact4 = UserContact(contactName = "Larry", contactPhoneNumber = "34534735423")
 
-        val contact1 = User(name = "Alice", phoneNumber = "1234567890", password = "password123")
-        val contact2 = User(name = "Bob", phoneNumber = "9876543210", password = "password456")
-        val contact3 = User(name = "Mike", phoneNumber = "2323984710", password = "password456")
-        val contact4 = User(name = "Jeff", phoneNumber = "2748592019", password = "password456")
+            val emergencyContact1 = EmergencyContact(contactName = "Mum", contactPhoneNumber = "34230472350")
+            val newUser = User(name = "John Doe", phoneNumber = "5559876543", password = "john123")
 
-        val emergencyContact1 = User(name = "Eve", phoneNumber = "5551234567", password = "password789")
-        val newUser = User(name = "John Doe", phoneNumber = "5559876543", password = "john123")
-
-        insertUserWithContacts(
-            user = newUser,
-            contacts = listOf(contact1, contact2, contact3, contact4),
-            emergencyContacts = listOf(emergencyContact1)
-        )
+            userDao.insertUser(user = newUser)
+            userDao.insertUserContact(contact1)
+            userDao.insertUserContact(contact2)
+            userDao.insertUserContact(contact3)
+            userDao.insertUserContact(contact4)
+            userDao.insertEmergencyContact(emergencyContact1)
     }
-
 }
