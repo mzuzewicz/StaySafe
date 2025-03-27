@@ -23,6 +23,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.staysafe.accounts.data.db.User
+import com.example.staysafe.accounts.data.db.UserDAO
+import com.example.staysafe.accounts.data.db.UserDatabase
+import com.example.staysafe.accounts.data.repository.UserRepository
+import com.example.staysafe.accounts.ui.view.AccountScreen
+import com.example.staysafe.accounts.ui.viewmodel.UserViewModel
 import com.example.staysafe.maps.JourneyRepository
 import com.example.staysafe.maps.JourneyViewModel
 import com.example.staysafe.maps.api.NetworkModule
@@ -71,17 +77,30 @@ fun MyApp() {
     val navController = rememberNavController()
     val context = LocalContext.current
 
-    val repository = JourneyRepository(
+
+
+    val journeyRepository = JourneyRepository(
         context = context,
         directionsApiService = NetworkModule.provideDirectionsApiService()
     )
-
-    val factory = JourneyViewModel.Companion.JourneyViewModelFactory(
+    val journeyFactory = JourneyViewModel.Companion.JourneyViewModelFactory(
         application = context.applicationContext as Application,
-        repository = repository
+        repository = journeyRepository
+    )
+    val journeyViewModel: JourneyViewModel = viewModel(factory = journeyFactory)
+
+
+    val userDatabase = UserDatabase.getDatabase(context)
+    val userDao = userDatabase.userDao()
+    val userRepository = UserRepository(userDao)
+
+    val userFactory = UserViewModel.Companion.UserViewModelFactory(
+        application = context.applicationContext as Application,
+        repository = userRepository
     )
 
-    val journeyViewModel: JourneyViewModel = viewModel(factory = factory)
+    val userViewModel: UserViewModel = viewModel(factory = userFactory)
+
 
     NavHost(
         navController = navController,
@@ -89,23 +108,14 @@ fun MyApp() {
     ) {
         composable("HomeScreen") { AppDrawerLayout(navController) { HomeScreen(navController) } }
         composable("StartJourneyScreen") { AppDrawerLayout(navController) { StartJourneyScreen(navController, viewModel = journeyViewModel) } }
-
         composable("TrackingScreen") { AppDrawerLayout(navController) { TrackingScreen(journeyViewModel) {} } }
-
-        composable("TrackingScreen") {
-            AppDrawerLayout(navController) {
-                TrackingScreen(journeyViewModel) {
-                    navController.navigateUp()
-                }
-            }
-        }
-
+        composable("TrackingScreen") {AppDrawerLayout(navController) {TrackingScreen(journeyViewModel) {navController.navigateUp()}}}
         composable("JourneyCompleteScreen") { AppDrawerLayout(navController) { JourneyCompleteScreen(navController) } }
-        composable("AccountScreen") { AppDrawerLayout(navController) { AccountScreen(navController) } }
+        composable("AccountScreen") { AppDrawerLayout(navController) { AccountScreen(navController, userViewModel) } }
         composable("TrackFriendScreen") { AppDrawerLayout(navController) { TrackFriendScreen(navController) } }
+
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -131,5 +141,6 @@ fun CustomTopAppBar(
         }
     )
 }
+
 
 

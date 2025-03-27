@@ -29,7 +29,6 @@ import com.example.staysafe.maps.JourneyViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartJourneyScreen(navController: NavController, viewModel: JourneyViewModel) {
-    val drawerState = remember { mutableStateOf(false) }
 
     Scaffold()
     { innerPadding ->

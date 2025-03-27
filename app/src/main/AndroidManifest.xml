@@ -22,9 +22,6 @@
         android:theme="@style/Theme.StaySafe"
         tools:targetApi="31">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCxMjBVZv-SaZn9f-8KljiSb8dHZARrKX4"/>
 
         <activity
             android:windowSoftInputMode="adjustResize"

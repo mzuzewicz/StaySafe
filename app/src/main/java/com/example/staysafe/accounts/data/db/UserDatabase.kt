@@ -1,10 +1,12 @@
-package com.example.staysafe.accounts
+package com.example.staysafe.accounts.data.db
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class, UserContact::class, EmergencyContact::class], version = 1)
 abstract class UserDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDAO
@@ -13,9 +15,9 @@ abstract class UserDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: UserDatabase? = null
 
-        fun getDatabase(context: android.content.Context): UserDatabase {
+        fun getDatabase(context: Context): UserDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     UserDatabase::class.java,
                     "user_database"

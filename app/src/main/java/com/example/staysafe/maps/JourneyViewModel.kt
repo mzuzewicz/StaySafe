@@ -22,10 +22,8 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
 
-class JourneyViewModel(
-    application: Application,
-    private val repository: JourneyRepository
-) : AndroidViewModel(application) {
+class JourneyViewModel(application: Application,private val repository: JourneyRepository) : AndroidViewModel(application) {
+
     private val _journey = MutableStateFlow<Journey?>(null)
     val journey: StateFlow<Journey?> = _journey
 
